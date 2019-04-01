@@ -108,10 +108,10 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
                 recyclerView.setAdapter(recyclerAdapter);
                 recyclerAdapter.notifyDataSetChanged();
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
+                 showToast("No internet is available");
 
             }
-            Toast.makeText(MainActivity.this, "No internet is available", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
 
     @Override
     public void showToast(String s) {
+        Toast.makeText(MainActivity.this, s +"", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -142,23 +143,9 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
 
     }
 
-    public final class MyOnClickListener implements View.OnClickListener {
 
 
-        @SuppressLint("LongLogTag")
-        @Override
-        public void onClick(View v) {
-            int itemPosition = recyclerView.indexOfChild(v);
-            Log.e("Clicked and Position is ", String.valueOf(itemPosition));
-            Intent indt = new Intent(MainActivity.this, NewsHeadlineDetail.class);
 
-        }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
 
     private void GetHeadlineData() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -168,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
                 .build();
         NetworkInterface networkInterface = retrofit.create(NetworkInterface.class);
 
-        Observable<TopHeadlineResponse> observable = networkInterface.GetHeadline("ae", "a4cf9c6322864d3f8b4d6ca75989b3fd").subscribeOn(Schedulers.newThread())
+        Observable<TopHeadlineResponse> observable = networkInterface.GetHeadline("us", "a4cf9c6322864d3f8b4d6ca75989b3fd").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
 
         observable.subscribe(new Observer<TopHeadlineResponse>() {
@@ -221,21 +208,21 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
                         new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                String NewsTitle = (topHeadlineModelClasses.get(position).getTitle());
-                                String Descprn = (topHeadlineModelClasses.get(position).getDescription());
+                             /*   String NewsTitle = (topHeadlineModelClasses.get(position).getTitle());
+                                String Descprn = (topHeadlineModelClasses.get(position).getDescription());*/
                                 String Url = (topHeadlineModelClasses.get(position).getUrl());
-                                String UrlToImage = (topHeadlineModelClasses.get(position).getUrlToImage());
+                             /*   String UrlToImage = (topHeadlineModelClasses.get(position).getUrlToImage());
                                 String PublishDate = (topHeadlineModelClasses.get(position).getPublishedAt());
-                                String Author = (topHeadlineModelClasses.get(position).getAuthor());
+                                String Author = (topHeadlineModelClasses.get(position).getAuthor());*/
 
                                 // TODO Handle item click
                                 Intent indt = new Intent(MainActivity.this, NewsHeadlineDetail.class);
-                                indt.putExtra("NewsTitle", NewsTitle);
-                                indt.putExtra("Descprn", Descprn);
+                             /*   indt.putExtra("NewsTitle", NewsTitle);
+                                indt.putExtra("Descprn", Descprn);*/
                                 indt.putExtra("Url", Url);
-                                indt.putExtra("UrlToImage", UrlToImage);
+                              /*  indt.putExtra("UrlToImage", UrlToImage);
                                 indt.putExtra("PublishDate", PublishDate);
-                                indt.putExtra("Author", Author);
+                                indt.putExtra("Author", Author);*/
 
                                 startActivity(indt);
                             }
