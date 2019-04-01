@@ -155,7 +155,10 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         }
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     private void GetHeadlineData() {
         Retrofit retrofit = new Retrofit.Builder()
